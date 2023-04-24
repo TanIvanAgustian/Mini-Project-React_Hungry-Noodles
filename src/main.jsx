@@ -1,11 +1,75 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import './layout/Js/fontAwesome'
 
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import { ApolloProvider } from '@apollo/client'
+import client from './layout/Js/apolloClient'
+import Auth from "./Authentication"
+
+import Root from './layout/JSX/Root/root'
+import UserLandingPage from './layout/JSX/User/userLandingPage'
+import AdminLandingPage from './layout/JSX/Admin/adminLandingPage'
+import Login from './layout/JSX/Login'
+import Register from './layout/JSX/Register'
+import RootUser from './layout/JSX/Root/rootUser'
+import RootAdmin from './layout/JSX/Root/rootAdmin'
+import FormMenuUser from './layout/JSX/User/formMenuUser'
+import FormMenuAdmin from './layout/JSX/Admin/formMenuAdmin'
+
+const {mustAdmin,mustLogin,mustUser} = Auth()
+
+const router = createBrowserRouter([
+    {
+      path:"/",
+      element:<Root/>,
+      loader:mustLogin,
+      children:[
+      {
+          path:"/Register",
+          element:<Register/>
+      },
+      {
+          path:"/",
+          element: <Login/>
+      }]
+    },
+    {
+        path:"/Homepage",
+        element: <RootUser/>,
+        loader:mustUser,
+        children: [
+        {
+            path:"/Homepage/",
+            element: <UserLandingPage/>,
+        },
+        {
+            path:"/Homepage/Menus",
+            element: <FormMenuUser/>,
+        },
+        ]
+    },
+    {
+        path:"/Homepage/Admin",
+        element: <RootAdmin/>,
+        loader:mustAdmin,
+        children: [
+          {
+            path:"/Homepage/Admin/",
+            element: <AdminLandingPage/>,
+          },
+          {
+            path:"/Homepage/Admin/Menus",
+            element: <FormMenuAdmin/>,
+          }
+        ]
+    }
+])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App/>
+    <ApolloProvider client={client}>
+      <RouterProvider router={router} />
+    </ApolloProvider>
   </React.StrictMode>,
 )
