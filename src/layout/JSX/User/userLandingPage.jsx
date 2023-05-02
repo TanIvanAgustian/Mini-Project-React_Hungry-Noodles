@@ -1,6 +1,7 @@
 import { Carousel } from "react-bootstrap";
 import Carousel1 from "../../../assets/Carousel/Carousel 1.jpg"
 import Carousel2 from "../../../assets/Carousel/Carousel 2.jpg"
+import { CarouselLandingPageUser } from "../Template/carousel";
 
 export default function UserLandingPage(){
     return<>
@@ -20,5 +21,9 @@ export default function UserLandingPage(){
             />
         </Carousel.Item>
     </Carousel>
+
+    <div className="col-10 rounded mx-auto bg-dark mt-3 mb-3 p-5">
+        <CarouselLandingPageUser/>
+    </div>
     </>
 }

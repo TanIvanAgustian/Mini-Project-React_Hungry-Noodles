@@ -1,13 +1,14 @@
 import React from "react";
 import Slider from "react-slick";
-import Mie from "../../../assets/Foto Menu/Mie sumatra.jpg";
-import Nasi from "../../../assets/Foto Menu/Nasi Goreng Spesial.jpg";
-import Bihun from "../../../assets/Foto Menu/Bihun Spesial.jpg";
-import CahMie from "../../../assets/Foto Menu/Cah Mie.jpg";
-import Kwetiau from "../../../assets/Foto Menu/Kwetiau Spesial.jpg";
-import MieGoreng from "../../../assets/Foto Menu/Mie Goreng Telur Spesial.jpg";
+import GraphQLMenu from "../../../graphQL/graphQLMenus";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getAuthCookie } from "../../../utils/cookies";
+import { AddToCart } from "../../../graphQL/graphQLCart";
 
-export default function Carousel(){
+export default function CarouselLogin(){
+
+    const {data} = GraphQLMenu()
+
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
             return (
@@ -43,48 +44,81 @@ export default function Carousel(){
     };
     return <>
         <Slider {...settings}>
-            <div>
-                <center>
-                    <img src={Mie} alt="" className="mt-3" style={{paddingLeft:"10px", borderRadius:"30px", paddingRight:"10px"}} width={"100%"} height={"500px"}/>
-                    <h3>Mie Sumatra</h3>
-                    <p>Mie Khas sumatra dengan taburan daging diatasnya</p>
-                </center>
-            </div>
-            <div>
-                <center>
-                    <img src={Nasi} alt="" className="mt-3" width={"100%"} style={{paddingLeft:"10px", borderRadius:"30px", paddingRight:"10px"}} height={"500px"}/>
-                    <h3>Nasi Goreng</h3>
-                    <p>Nasi Goreng yang khas sumatra yang berisi perpaduan daging, udang, dan telur</p>
-                </center>
-            </div>
-            <div>
-                <center>
-                    <img src={Kwetiau} alt="" className="mt-3" width={"100%"} style={{paddingLeft:"10px", borderRadius:"30px", paddingRight:"10px"}} height={"500px"}/>
-                    <h3>Kwetiau Goreng</h3>
-                    <p>Kwetiau khas sumatra yang memadukan kwetiau basah dengan telur dan udang</p>
-                </center>
-            </div>
-            <div>
-                <center>
-                    <img src={MieGoreng} alt="" className="mt-3" width={"100%"} style={{paddingLeft:"10px", borderRadius:"30px", paddingRight:"10px"}} height={"500px"}/>
-                    <h3>Mie Goreng Telur</h3>
-                    <p>Versi mie goreng dari mie sumatra yang dilengkapi telur dan udang</p>
-                </center>
-            </div>
-            <div>
-                <center>
-                    <img src={CahMie} alt="" className="mt-3" width={"100%"} style={{paddingLeft:"10px", borderRadius:"30px", paddingRight:"10px"}} height={"500px"}/>
-                    <h3>Cah Mie</h3>
-                    <p>Mie kuah yang bertekstur tebal khas Sumatra yang memadukan daging dengan udang</p>
-                </center>
-            </div>
-            <div>
-                <center>
-                    <img src={Bihun} alt="" className="mt-3" width={"100%"} style={{paddingLeft:"10px", borderRadius:"30px", paddingRight:"10px"}} height={"500px"}/>
-                    <h3>Bihun Goreng</h3>
-                    <p>Bihun goreng Khas Sumatra yang beisikan daging dan udang dengan taburan daging merah</p>
-                </center>
-            </div>
+            {data?.Menus.map((post) => (
+                <div>
+                    <center>
+                        <img src={post.menuImage} alt="" className="mt-3" style={{paddingLeft:"10px", borderRadius:"30px", paddingRight:"10px"}} width={"100%"} height={"500px"}/>
+                        <h3>{post.menuName}</h3>
+                        <p>{post.menuDescription}</p>
+                    </center>
+                </div>
+            ))}
+            
         </Slider>
     </>
+}
+
+export function CarouselLandingPageUser(){
+
+    const {data} = GraphQLMenu()
+
+    const {AddCart} = AddToCart()
+    const token = getAuthCookie()
+
+    const handleAddCart = (item) => {
+        var Buy = confirm("Apakah Yakin Membeli "+item.menuName)
+        if(Buy){
+            AddCart({
+                variables: {
+                    object: {
+                        menuName : item.menuName,
+                        menuPrice : item.menuPrice,
+                        menuAllPrice : item.menuPrice,
+                        user_ID : token,
+                        menu_ID : item.id
+                    }
+                }
+            })
+            console.log("harusnya masuk")
+        }
+        else{
+            setTimeout(() => {
+                alert("Pembelian dibatalkan")
+            }, 2000);
+        }
+    }
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        autoplay: true,
+        speed: 1000,
+        autoplaySpeed: 6000,
+        cssEase: "linear",
+    };
+    return (
+        <div>
+            <h2 className="text-center text-light mb-3">Our Products</h2>
+            <Slider {...settings}>
+                {data?.Menus.map((post) => (  
+                    <div className="card mb-3 p-3">
+                    <div className="row g-0 ">
+                        <div className="col-md-4">
+                            <img src={post.menuImage} height={"140px"} width={"100%"} className="rounded-start" alt="..."/>
+                        </div>
+                        <div className="col-md-8">
+                            <div className="card-body">
+                            <h4 className="card-title">{post.menuName}</h4>
+                            <h5 className="card-text">{post.menuPrice}</h5>
+                            <button className="btn btn-primary float-end mt-3" onClick={() => handleAddCart(post)}><FontAwesomeIcon icon={["fas","cart-shopping"]} fixedWidth/>Add to Cart</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                ))}
+            </Slider>
+        </div>
+    );
 }

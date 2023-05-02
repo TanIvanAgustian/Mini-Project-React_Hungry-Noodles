@@ -16,6 +16,9 @@ import RootUser from './layout/JSX/Root/rootUser'
 import RootAdmin from './layout/JSX/Root/rootAdmin'
 import FormMenuUser from './layout/JSX/User/formMenuUser'
 import FormMenuAdmin from './layout/JSX/Admin/formMenuAdmin'
+import AdminAddMenuForm from './layout/JSX/Admin/adminAddMenuForm'
+import DetailMenus from './layout/JSX/Admin/detailMenus'
+import Cart from './layout/JSX/User/cart'
 
 const {mustAdmin,mustLogin,mustUser} = Auth()
 
@@ -47,6 +50,10 @@ const router = createBrowserRouter([
             path:"/Homepage/Menus",
             element: <FormMenuUser/>,
         },
+        {
+            path:"/Homepage/Cart",
+            element: <Cart/>
+        },
         ]
     },
     {
@@ -61,6 +68,14 @@ const router = createBrowserRouter([
           {
             path:"/Homepage/Admin/Menus",
             element: <FormMenuAdmin/>,
+          },
+          {
+            path:"/Homepage/Admin/AddMenus",
+            element: <AdminAddMenuForm/>,
+          },
+          {
+            path:"/Homepage/Admin/AddMenus/:id",
+            element: <DetailMenus/>
           }
         ]
     }
