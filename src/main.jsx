@@ -19,6 +19,8 @@ import FormMenuAdmin from './layout/JSX/Admin/formMenuAdmin'
 import AdminAddMenuForm from './layout/JSX/Admin/adminAddMenuForm'
 import DetailMenus from './layout/JSX/Admin/detailMenus'
 import Cart from './layout/JSX/User/cart'
+import Checkout from './layout/JSX/User/checkout'
+import CheckoutHistory from './layout/JSX/User/checkoutHistory'
 
 const {mustAdmin,mustLogin,mustUser} = Auth()
 
@@ -54,6 +56,14 @@ const router = createBrowserRouter([
             path:"/Homepage/Cart",
             element: <Cart/>
         },
+        {
+          path:"/Homepage/Cart/CheckOut",
+          element: <Checkout/>
+        },
+        {
+          path:"/Homepage/History",
+          element: <CheckoutHistory/>
+      },
         ]
     },
     {

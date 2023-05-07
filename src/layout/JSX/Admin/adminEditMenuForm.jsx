@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Modal } from "react-bootstrap";
-import { UpdateMenusById } from "../../../graphQL/graphQLMenus";
+import { UpdateMenusById } from "../../../fetchData/graphQLMenus";
 import CloudinaryUpload from "../../Js/cloudinaryUpload";
 
 

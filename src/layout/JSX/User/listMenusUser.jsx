@@ -1,7 +1,7 @@
-import GraphQLMenu from "../../../graphQL/graphQLMenus"
+import GraphQLMenu from "../../../fetchData/graphQLMenus"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Accordion } from "react-bootstrap"
-import { AddToCart } from "../../../graphQL/graphQLCart"
+import { AddToCart } from "../../../fetchData/graphQLCart"
 import { getAuthCookie } from "../../../utils/cookies"
 
 export default function ListMenusUser(){

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import GraphQLFood, { DeleteMenusById } from "../../../graphQL/graphQLMenus"
+import GraphQLFood, { DeleteMenusById } from "../../../fetchData/graphQLMenus"
 import ListDrinks from "./listDrinks";
 import ListFoods from "./listFoods";
 import ListSnacks from "./listSnacks";

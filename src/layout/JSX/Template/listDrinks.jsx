@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { DeleteMenusById, GraphQLDrink, UpdateAvailability } from "../../../graphQL/graphQLMenus"
+import { DeleteMenusById, GraphQLDrink, UpdateAvailability } from "../../../fetchData/graphQLMenus"
 import { Accordion } from "react-bootstrap";
 
 export default function ListDrinks(){

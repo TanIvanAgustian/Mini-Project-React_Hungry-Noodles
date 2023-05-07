@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Modal } from "react-bootstrap";
-import { InsertMenus } from "../../../graphQL/graphQLMenus";
+import { InsertMenus } from "../../../fetchData/graphQLMenus";
 import CloudinaryUpload from "../../Js/cloudinaryUpload";
 import { useRef } from "react";
 import noImage from '../../../assets/noImage.png'
