@@ -1,13 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ShowCart, { UpdateAmount, DeleteCartByID } from "../../../graphQL/graphQLCart";
+import ShowCart, { UpdateAmount, DeleteCartByID, UpdateCheck } from "../../../fetchData/graphQLCart";
 import { getAuthCookie } from "../../../utils/cookies";
+import Checkout from "./checkout";
+import React, { useState } from "react";
+import { render } from "react-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart(){
     
     const {data} = ShowCart()
     const {UpdateMenuAmount} = UpdateAmount()
     const {DeleteCart} = DeleteCartByID()
+    const {UpdateChecked} = UpdateCheck()
+    const [modalShow,setModalShow] = useState(false)
     const token = getAuthCookie()
+    const navigate = useNavigate()
 
     const myCart = data?.Cart.filter((element) => element.user_ID == token)
     const user = data?.Users.filter((element) => element.Id == token)
@@ -59,9 +66,17 @@ export default function Cart(){
         }
     }
 
+    const handleCheck = (item) => {
+        UpdateChecked({
+            variables:{
+                id : item.id,
+                Check : !item.Check
+            }
+        })
+    }
+        
     const handleCheckout = () => {
-        const dataCheckout = document.querySelector(".form-check-input").ariaChecked;
-        console.log(dataCheckout)
+        navigate("/Homepage/Cart/CheckOut")
     }
 
     return <>
@@ -120,47 +135,23 @@ export default function Cart(){
                     <FontAwesomeIcon icon={["fas","trash"]} fixedWidth/>
                     <span>Delete</span>
                 </button>
-                
-                <input type="checkbox" className="ms-3 form-check-input align-middle" value={post} />
+                {handleMenu(post.menu_ID).menuAvailability ? <input type="checkbox" onClick={() => handleCheck(post)} checked={post.Check} className="ms-3 form-check-input align-middle" /> : <input type="checkbox" className="ms-3 form-check-input align-middle" disabled/>}
             </div>
             </div>
         </div>
         </div>
     ))}
-    
-    
-                <div className="card mb-4">
-                <div className="card-body p-4 d-flex flex-row">
-                    <div className="form-outline flex-fill">
-                    <input
-                        type="text"
-                        id="form1"
-                        className="form-control form-control-lg"
-                    />
-                    <label className="form-label" htmlFor="form1">
-                        Discound code
-                    </label>
-                    </div>
-                    <button
-                    type="button"
-                    className="btn btn-outline-warning btn-lg ms-3"
-                    >
-                    Apply
-                    </button>
-                </div>
-                </div>
                 <div className="card">
                 <div className="card-body">
                     <button type="button" onClick={() => handleCheckout()} className="btn btn-warning btn-block btn-lg">
-                    Proceed to Pay
+                        <FontAwesomeIcon icon={["fas","cart-shopping"]} fixedWidth/>CheckOut
                     </button>
+                    <div id="modalcheckout"></div>
                 </div>
                 </div>
                 </div>
             </div>
         </div>
         </section>
-
-
     </>
 }

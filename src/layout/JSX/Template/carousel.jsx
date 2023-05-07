@@ -1,9 +1,9 @@
 import React from "react";
 import Slider from "react-slick";
-import GraphQLMenu from "../../../graphQL/graphQLMenus";
+import GraphQLMenu from "../../../fetchData/graphQLMenus";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getAuthCookie } from "../../../utils/cookies";
-import { AddToCart } from "../../../graphQL/graphQLCart";
+import { AddToCart } from "../../../fetchData/graphQLCart";
 
 export default function CarouselLogin(){
 

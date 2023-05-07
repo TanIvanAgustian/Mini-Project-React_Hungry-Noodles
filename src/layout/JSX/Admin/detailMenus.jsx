@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom"
-import GraphQLMenu, { DeleteMenusById } from "../../../graphQL/graphQLMenus"
+import GraphQLMenu, { DeleteMenusById } from "../../../fetchData/graphQLMenus"
 import { useEffect } from "react"
 import AdminEditMenuForm from "./adminEditMenuForm"
 import { useState } from "react"

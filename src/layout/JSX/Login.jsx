@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import setAuthCookie, {getAuthCookie} from "../../utils/cookies";
-import GETGraphQLUsers from "../Js/user/GraphQLUsers";
+import GETGraphQLUsers from "../../fetchData/GraphQLUsers";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, Navigate, useNavigate } from "react-router-dom";

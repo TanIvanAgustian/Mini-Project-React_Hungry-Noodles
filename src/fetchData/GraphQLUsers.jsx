@@ -22,7 +22,7 @@ mutation MyMutation($object: Users_insert_input!) {
 
 export default function GETGraphQLUsers() {
     const {data,loading,error} = useSubscription(getUsers)
-    return {data,loading,error}
+    return {users:data,loading,error}
 }
 
 export function ADDGraphQLUsers(){

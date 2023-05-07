@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { ADDGraphQLUsers } from "../Js/user/GraphQLUsers";
+import { ADDGraphQLUsers } from "../../fetchData/GraphQLUsers";
 import { useState } from "react";
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';

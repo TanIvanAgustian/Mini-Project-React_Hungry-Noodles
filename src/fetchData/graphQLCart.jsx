@@ -18,6 +18,7 @@ query MyQuery {
         menuPrice
         menu_ID
         user_ID
+        Check
     }
     Menus {
         menuImage
@@ -46,7 +47,39 @@ mutation MyMutation($id: uuid!){
         id
     }
 }
+`
 
+const deleteCartbyUserId = gql`
+mutation MyMutation($id: uuid_comparison_exp!) {
+    delete_Cart(where: {user_ID: $id, Check: {_eq: true}}){
+        returning{
+            id
+        }
+    }
+}
+`
+
+const updateCheck = gql`
+mutation MyMutation($id: uuid!, $Check: Boolean!) {
+    update_Cart_by_pk(pk_columns: {id: $id}, _set: {Check: $Check}) {
+        id
+    }
+}
+`
+
+const checkoutItem = gql`
+subscription MySubscription{
+    Cart(where: {Check: {_eq: true}}) {
+        id
+        menuAllPrice
+        Check
+        menuAmount
+        menuName
+        menuPrice
+        menu_ID
+        user_ID
+    }
+}
 `
 
 
@@ -68,4 +101,19 @@ export function UpdateAmount(){
 export function DeleteCartByID(){
     const [DeleteCart,loading, error] = useMutation(deleteCartById, {refetchQueries: [displayCartData]})
     return {DeleteCart}
+}
+
+export function UpdateCheck(){
+    const [UpdateChecked, loading, error] = useMutation(updateCheck, {refetchQueries: [displayCartData]})
+    return {UpdateChecked}
+}
+
+export function GetCheckoutItem(){
+    const {data,loading,error} = useSubscription(checkoutItem)
+    return {data}
+}
+
+export function DeleteCartByUserId(){
+    const [DeleteByUserId,loading, error] = useMutation(deleteCartbyUserId, {refetchQueries: [displayCartData]})
+    return {DeleteByUserId}
 }
