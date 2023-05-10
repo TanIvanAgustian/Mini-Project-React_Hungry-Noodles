@@ -3,13 +3,10 @@ import * as Yup from "yup";
 import { Modal } from "react-bootstrap";
 import { InsertMenus } from "../../../fetchData/graphQLMenus";
 import CloudinaryUpload from "../../Js/cloudinaryUpload";
-import { useRef } from "react";
-import noImage from '../../../assets/noImage.png'
-
+import noImage from "../../../assets/noImage.png";
 
 export default function AdminAddMenuForm(props) {
-    
-    const {AddMenus} = InsertMenus()
+    const { AddMenus } = InsertMenus();
 
     const formik = useFormik({
         initialValues: {
@@ -20,24 +17,26 @@ export default function AdminAddMenuForm(props) {
         menuPrice: "",
         },
         validationSchema: Yup.object({
-            menuName: Yup.string().required("Product Name Empty"),
-            menuDescription: Yup.string().required("Product Description Empty"),
-            menuCategory: Yup.string().required("Product Category Empty"),
-            menuPrice: Yup.string().required("Product Price Empty"),
+        menuName: Yup.string().required("Product Name Empty"),
+        menuDescription: Yup.string().required("Product Description Empty"),
+        menuCategory: Yup.string().required("Product Category Empty"),
+        menuPrice: Yup.string().required("Product Price Empty"),
         }),
         onSubmit: (e) => {
-            AddMenus({
-                variables: {
-                    object: {
-                        menuName : formik.values.menuName,
-                        menuDescription : formik.values.menuDescription,
-                        menuImage : document.getElementById("uploadedimage").getAttribute("src"),
-                        menuCategory : formik.values.menuCategory,
-                        menuPrice : formik.values.menuPrice,
-                    }
-                }
-            })
-            props.onHide()
+        AddMenus({
+            variables: {
+            object: {
+                menuName: formik.values.menuName,
+                menuDescription: formik.values.menuDescription,
+                menuImage: document
+                .getElementById("uploadedimage")
+                .getAttribute("src"),
+                menuCategory: formik.values.menuCategory,
+                menuPrice: formik.values.menuPrice,
+            },
+            },
+        });
+        props.onHide();
         },
     });
 
@@ -55,12 +54,17 @@ export default function AdminAddMenuForm(props) {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                
-                <div className="text-center mb-3">
-                    <img id="uploadedimage" className="rounded mb-3" width={"200px"} src={noImage} alt="image Not Found" /> <br />
-                    <CloudinaryUpload/>
-                </div>
-            
+            <div className="text-center mb-3">
+                <img
+                id="uploadedimage"
+                className="rounded mb-3"
+                width={"200px"}
+                src={noImage}
+                alt="image Not Found"
+                />{" "}
+                <br />
+                <CloudinaryUpload />
+            </div>
 
             <form onSubmit={formik.handleSubmit}>
                 <div className="form-group row mt-2">
@@ -85,7 +89,10 @@ export default function AdminAddMenuForm(props) {
                 </div>
 
                 <div className="form-group row mt-2">
-                <label htmlFor="inputDescription3" className="col-sm-4 col-form-label">
+                <label
+                    htmlFor="inputDescription3"
+                    className="col-sm-4 col-form-label"
+                >
                     Deskripsi Produk
                 </label>
                 <div className="col-sm-8">
@@ -137,7 +144,7 @@ export default function AdminAddMenuForm(props) {
                     Harga Produk
                 </label>
                 <div className="col-sm-8">
-                    <input 
+                    <input
                     type="number"
                     className="form-control"
                     id="menuPrice"
@@ -153,7 +160,6 @@ export default function AdminAddMenuForm(props) {
                 </div>
                 </div>
 
-                
                 <Modal.Footer>
                 <div className="form-group row">
                     <div className="col-sm-12">

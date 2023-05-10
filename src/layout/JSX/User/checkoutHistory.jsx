@@ -23,7 +23,7 @@ export default function CheckoutHistory(){
             item.push(
             <div className="row mb-2">
                 <div className="col-1">
-                <h6 className="my-0 ms-3">{number}.</h6>
+                    <h6 className="my-0 ms-3">{number}.</h6>
                 </div>
                 <div className="col-8">
                     <h6 className="my-0 ms-3">{post.order[i]}</h6>

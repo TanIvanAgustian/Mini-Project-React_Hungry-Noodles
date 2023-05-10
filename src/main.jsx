@@ -9,7 +9,6 @@ import Auth from "./Authentication"
 
 import Root from './layout/JSX/Root/root'
 import UserLandingPage from './layout/JSX/User/userLandingPage'
-import AdminLandingPage from './layout/JSX/Admin/adminLandingPage'
 import Login from './layout/JSX/Login'
 import Register from './layout/JSX/Register'
 import RootUser from './layout/JSX/Root/rootUser'
@@ -74,10 +73,6 @@ const router = createBrowserRouter([
         children: [
           {
             path:"/Homepage/Admin/",
-            element: <AdminLandingPage/>,
-          },
-          {
-            path:"/Homepage/Admin/Menus",
             element: <FormMenuAdmin/>,
           },
           {
