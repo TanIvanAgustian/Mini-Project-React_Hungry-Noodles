@@ -3,6 +3,7 @@ import GraphQLMenu, { DeleteMenusById } from "../../../fetchData/graphQLMenus"
 import { useEffect } from "react"
 import AdminEditMenuForm from "./adminEditMenuForm"
 import { useState } from "react"
+import { DeleteCartByMenuId } from "../../../fetchData/graphQLCart"
 
 let item = []
 
@@ -11,18 +12,22 @@ export default function DetailMenus(){
     const navigate = useNavigate()
     const { data } = GraphQLMenu()
     const { id } = useParams()
-    console.log(data)
     const {DeleteMenuById} = DeleteMenusById()
     const [modalShow, setModalShow] = useState(false);
+    const {DeleteByMenuId} = DeleteCartByMenuId()
 
     const item = data?.Menus.filter((element)=> element.id === id)
-    console.log(item)
 
-    const handleDelete = (post) => {
-        console.log("Deleting :"+post)
+    const handleDelete = (idx) => {
+        console.log("Deleting :"+idx)
         DeleteMenuById({
             variables:{
-                id: post
+                id: idx
+            }
+        })
+        DeleteByMenuId({
+            variables:{
+                menu_ID: idx
             }
         })
         navigate("/Homepage/Admin/Menus")

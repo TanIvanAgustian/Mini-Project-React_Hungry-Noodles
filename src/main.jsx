@@ -21,6 +21,7 @@ import DetailMenus from './layout/JSX/Admin/detailMenus'
 import Cart from './layout/JSX/User/cart'
 import Checkout from './layout/JSX/User/checkout'
 import CheckoutHistory from './layout/JSX/User/checkoutHistory'
+import CheckoutList from './layout/JSX/Admin/checkoutList'
 
 const {mustAdmin,mustLogin,mustUser} = Auth()
 
@@ -86,7 +87,11 @@ const router = createBrowserRouter([
           {
             path:"/Homepage/Admin/AddMenus/:id",
             element: <DetailMenus/>
-          }
+          },
+          {
+            path:"/Homepage/Admin/Checkout",
+            element: <CheckoutList/>,
+          },
         ]
     }
 ])

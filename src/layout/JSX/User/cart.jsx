@@ -130,12 +130,12 @@ export default function Cart(){
             <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                 <h5 className="mb-0">RP.{post.menuAllPrice}</h5>
             </div>
-            <div className="col-md-2 col-lg-2 col-xl-2 text-center">
+            <div className="col-md-3 col-lg-3 d-flex justify-content-between col-xl-3 text-center">
                 <button className="btn btn-danger rounded-pill" onClick={() => handleDelete(post.id)}>
                     <FontAwesomeIcon icon={["fas","trash"]} fixedWidth/>
                     <span>Delete</span>
                 </button>
-                {handleMenu(post.menu_ID).menuAvailability ? <input type="checkbox" onClick={() => handleCheck(post)} checked={post.Check} className="ms-3 form-check-input align-middle" /> : <input type="checkbox" className="ms-3 form-check-input align-middle" disabled/>}
+                {handleMenu(post.menu_ID).menuAvailability ? <input type="checkbox" onClick={() => handleCheck(post)} checked={post.Check} className="ms-3 form-check-input align-middle" /> : <span class="badge bg-secondary align-self-center ms-3"><FontAwesomeIcon icon={["fas","xmark"]} fixedWidth/>kosong</span>}
             </div>
             </div>
         </div>

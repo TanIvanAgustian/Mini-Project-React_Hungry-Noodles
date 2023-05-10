@@ -18,7 +18,7 @@ export default function Header(){
     <Navbar variant="dark" bg="dark" expand="lg">
         <Container fluid>
             <Navbar.Brand href="/"><img src={Logo} alt="..." style={{width:"40px"}} />HungryNoodles</Navbar.Brand>
-            <Nav className="me-auto">
+            <Nav className="text-light me-auto">
                 <Nav.Link><Link to={"/Homepage"}>Home</Link></Nav.Link>
                 <Nav.Link><Link to={"/Homepage/Menus"}>Menu</Link></Nav.Link>
                 <Nav.Link><Link to={"/Homepage/Cart"}>Cart</Link></Nav.Link>

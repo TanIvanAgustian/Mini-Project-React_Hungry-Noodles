@@ -82,6 +82,21 @@ subscription MySubscription{
 }
 `
 
+const deleteMenuByMenuID = gql`
+mutation MyMutation($menu_ID: uuid!) {
+    delete_Cart(where: {menu_ID: {_eq: $menu_ID}}){
+        affected_rows
+    }
+}
+`
+
+const updateCartByMenus = gql`
+mutation MyMutation($menu_ID: uuid!, $object: Cart_set_input!) {
+    update_Cart(where: {menu_ID: {_eq: $menu_ID}}, _set: $object){
+        affected_rows
+    }
+}
+`
 
 export function AddToCart(){
     const [AddCart, loading, error] = useMutation(addToCart, {refetchQueries: [displayCartData]})
@@ -116,4 +131,14 @@ export function GetCheckoutItem(){
 export function DeleteCartByUserId(){
     const [DeleteByUserId,loading, error] = useMutation(deleteCartbyUserId, {refetchQueries: [displayCartData]})
     return {DeleteByUserId}
+}
+
+export function DeleteCartByMenuId(){
+    const [DeleteByMenuId,loading, error] = useMutation(deleteMenuByMenuID, {refetchQueries: [displayCartData]})
+    return {DeleteByMenuId}
+}
+
+export function UpdateCartByMenus(){
+    const [UpdateCartByMenu,loading, error] = useMutation(updateCartByMenus, {refetchQueries: [displayCartData]})
+    return {UpdateCartByMenu}
 }
