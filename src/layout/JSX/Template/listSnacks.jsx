@@ -3,7 +3,6 @@ import { DeleteMenusById, GraphQLSnack, UpdateAvailability } from "../../../fetc
 import { Accordion } from "react-bootstrap";
 
 export default function ListSnacks(){
-
     const navigate = useNavigate()
     const {data} = GraphQLSnack()
     const {UpdateMenuAvailability} = UpdateAvailability()

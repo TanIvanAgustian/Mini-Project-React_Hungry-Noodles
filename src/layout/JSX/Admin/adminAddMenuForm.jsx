@@ -18,14 +18,12 @@ export default function AdminAddMenuForm(props) {
         menuImage: "",
         menuCategory: "",
         menuPrice: "",
-        menuStock: "",
         },
         validationSchema: Yup.object({
             menuName: Yup.string().required("Product Name Empty"),
             menuDescription: Yup.string().required("Product Description Empty"),
             menuCategory: Yup.string().required("Product Category Empty"),
             menuPrice: Yup.string().required("Product Price Empty"),
-            menuStock: Yup.string().required("Product Stock Empty"),
         }),
         onSubmit: (e) => {
             AddMenus({
@@ -36,7 +34,6 @@ export default function AdminAddMenuForm(props) {
                         menuImage : document.getElementById("uploadedimage").getAttribute("src"),
                         menuCategory : formik.values.menuCategory,
                         menuPrice : formik.values.menuPrice,
-                        menuStock : formik.values.menuStock,
                     }
                 }
             })
@@ -156,27 +153,7 @@ export default function AdminAddMenuForm(props) {
                 </div>
                 </div>
 
-                <div className="form-group row mt-2 mb-3">
-                <label htmlFor="inputEmail3" className="col-sm-4 col-form-label">
-                    Stok Produk
-                </label>
-                <div className="col-sm-8">
-                    <input 
-                    type="number"
-                    className="form-control"
-                    id="menuStock"
-                    placeholder="Masukkan Stok Produk"
-                    value={formik.values.menuStock}
-                    onChange={formik.handleChange}
-                    />
-                    {formik.errors.menuStock && formik.touched.menuStock && (
-                    <div className="form-text text-danger">
-                        {formik.errors.menuStock}
-                    </div>
-                    )}
-                </div>
-                </div>
-
+                
                 <Modal.Footer>
                 <div className="form-group row">
                     <div className="col-sm-12">

@@ -29,7 +29,30 @@ subscription MySubscription {
         user_ID
     }
 }
+`
 
+const deleteCheckoutById = gql`
+mutation MyMutation($id: uuid!) {
+    delete_Checkout_by_pk(id: $id){
+      id
+    }
+  }
+`
+
+const cancelCheckoutById = gql`
+mutation MyMutation($id: uuid!) {
+    update_Checkout_by_pk(pk_columns: {id: $id}, _set: {cancelation: true}) {
+      id
+    }
+  }
+`
+
+const confirmCheckoutById = gql`
+mutation MyMutation($id: uuid!) {
+    update_Checkout_by_pk(pk_columns: {id: $id}, _set: {confirmation: true}) {
+      id
+    }
+  }
 `
 
 export function InsertCheckout(){
@@ -40,4 +63,19 @@ export function InsertCheckout(){
 export default function GetAllCheckout(){
     const {data, loading, error} = useSubscription(getCheckout)
     return {data}
+}
+
+export function DeleteCheckoutById(){
+    const [deleteData, loading, error] = useMutation(deleteCheckoutById)
+    return {deleteData}
+}
+
+export function CancelCheckoutById(){
+    const [cancelCheckout, loading, error] = useMutation(cancelCheckoutById)
+    return {cancelCheckout}
+}
+
+export function ConfirmCheckoutById(){
+    const [confirmCheckout, loading, error] = useMutation(confirmCheckoutById)
+    return {confirmCheckout}
 }

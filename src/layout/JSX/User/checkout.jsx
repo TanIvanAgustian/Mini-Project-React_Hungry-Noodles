@@ -10,7 +10,8 @@ import { useFormik } from "formik"
 import GETGraphQLUsers from "../../../fetchData/GraphQLUsers"
 import { InsertCheckout } from "../../../fetchData/graphQLCheckout"
 import { useNavigate } from "react-router-dom"
-
+import CloudinaryUpload from "../../Js/cloudinaryUpload"
+import noImage from "../../../assets/noImage.png"
 
 export default function Checkout(){
     const {data} = GetCheckoutItem()
@@ -61,7 +62,7 @@ export default function Checkout(){
         Address:"",
       },
       validationSchema: Yup.object({
-          phoneNumber: Yup.string().required("Phone Number Empty"),
+          phoneNumber: Yup.string().required("Phone Number Empty").matches("^[0-9]*$","Contain Number Only"),
           Address: Yup.string().required("Phone Number Empty"),
       }),
       onSubmit: (e) => {
@@ -87,8 +88,8 @@ export default function Checkout(){
               city : address.city_name,
               postalCode: address.postal_code,
               address : formik.values.Address,
-              phoneNumber : formik.values.Address,
-              payment : "coba tok",
+              phoneNumber : formik.values.phoneNumber,
+              payment : document.getElementById("uploadedimage").getAttribute("src"),
               totalPayment : finalPrice,
               user_ID: token
             }
@@ -145,13 +146,18 @@ export default function Checkout(){
     </div>
     <div className="col-md-8 order-md-1">
       <h4 className="mb-3">Billing address</h4>
+      <div className="text-center mb-3">
+            <h5 className="text-center">Bukti Pembayaran</h5>
+            <img id="uploadedimage" className="rounded mb-3" width={"200px"} src={noImage} alt="image Not Found" /> <br />
+            <CloudinaryUpload/>
+        </div>
       <form onSubmit={formik.handleSubmit}>
         <div className="mb-3">
           <label htmlFor="phoneNumber">
             Phone Number
           </label>
           <input
-            type="number"
+            type="text"
             className="form-control"
             id="phoneNumber"
             placeholder="Enter Your Phone Number"
@@ -224,6 +230,7 @@ export default function Checkout(){
             </select>
           </div>
         </div>
+        
         <button className="btn btn-primary btn-lg btn-block p-3 mb-3" type="submit">
             <FontAwesomeIcon icon={["fas","cart-shopping"]} fixedWidth/> Checkout
         </button>

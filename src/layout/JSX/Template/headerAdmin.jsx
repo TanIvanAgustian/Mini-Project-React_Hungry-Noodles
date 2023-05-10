@@ -21,7 +21,7 @@ export default function HeaderAdmin(){
             <Nav className="me-auto">
                 <Nav.Link><Link to={"/Homepage/Admin"}>Home</Link></Nav.Link>
                 <Nav.Link><Link to={"/Homepage/Admin/Menus"}>Menu</Link></Nav.Link>
-                <Nav.Link>Pricing</Nav.Link>
+                <Nav.Link><Link to={"/Homepage/Admin/Checkout"}>Checkout</Link></Nav.Link>
             </Nav>
             <Navbar.Toggle aria-controls="navbar-dark-example" />
             <Navbar.Collapse id="navbar-dark-example">

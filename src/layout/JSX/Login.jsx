@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import setAuthCookie, {getAuthCookie} from "../../utils/cookies";
-import GETGraphQLUsers from "../../fetchData/GraphQLUsers";
+import GETGraphQLUsers from "../../fetchData/GraphQLUsers"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function Login() {
     
-    const { data } = GETGraphQLUsers();
+    const { users } = GETGraphQLUsers();
     const [Loggedin,setLoggedin] = useState(false)
 
     const formik = useFormik({
@@ -27,10 +27,10 @@ export default function Login() {
         }),
         onSubmit: (e) => {
             let isThere = false;
-            for (let i = 0; data?.Users.length>i;i++){
-                if (data.Users[i].Email == formik.values.email && data.Users[i].Password == formik.values.password){
+            for (let i = 0; users?.Users.length>i;i++){
+                if (users.Users[i].Email == formik.values.email && users.Users[i].Password == formik.values.password){
                     isThere=true;
-                    setAuthCookie(data.Users[i].Id);
+                    setAuthCookie(users.Users[i].Id);
                     setLoggedin(true)
                     setTimeout(() => {
                         window.location.reload()
@@ -55,7 +55,7 @@ export default function Login() {
                 <a
                     className="nav-link active"
                     id="tab-login"
-                    data-mdb-toggle="pill"
+                    users-mdb-toggle="pill"
                     href="#pills-login"
                     role="tab"
                     aria-controls="pills-login"
@@ -68,7 +68,7 @@ export default function Login() {
                 <Link to={"../Register"}><a
                     className="nav-link"
                     id="tab-register"
-                    data-mdb-toggle="pill"
+                    users-mdb-toggle="pill"
                     role="tab"
                 >
                     Register
@@ -100,7 +100,7 @@ export default function Login() {
                     />
 
                     {formik.errors.email && formik.touched.email && (
-                        <div className="form-text text-danger" data-testid="error">
+                        <div className="form-text text-danger" users-testid="error">
                         {formik.errors.email}
                         </div>
                     )}
@@ -121,7 +121,7 @@ export default function Login() {
                     />
 
                     {formik.errors.password && formik.touched.password && (
-                        <div className="form-text text-danger" data-testid="error">
+                        <div className="form-text text-danger" users-testid="error">
                         {formik.errors.password}
                         </div>
                     )}
