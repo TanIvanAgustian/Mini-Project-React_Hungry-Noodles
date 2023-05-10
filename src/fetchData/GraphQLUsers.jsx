@@ -1,5 +1,6 @@
 import { gql, useMutation, useSubscription } from "@apollo/client";
 
+{/*get all user*/}
 const getUsers = gql`
 subscription MySubscription {
     Users {
@@ -8,8 +9,13 @@ subscription MySubscription {
         Password
         Username
     }
+}`
+export default function GETGraphQLUsers() {
+    const {data,loading,error} = useSubscription(getUsers)
+    return {users:data,loading,error}
 }
-`
+
+{/*add new user*/}
 const addUsers = gql`
 mutation MyMutation($object: Users_insert_input!) {
     insert_Users_one(object: $object){
@@ -17,14 +23,7 @@ mutation MyMutation($object: Users_insert_input!) {
         Email
         Password
     }
-}  
-`
-
-export default function GETGraphQLUsers() {
-    const {data,loading,error} = useSubscription(getUsers)
-    return {users:data,loading,error}
-}
-
+}  `
 export function ADDGraphQLUsers(){
     const [Adddata,loading,error] = useMutation(addUsers);
     return {Adddata,loading,error}

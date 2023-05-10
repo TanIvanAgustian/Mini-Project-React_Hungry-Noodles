@@ -40,7 +40,6 @@ class CloudinaryUpload extends Component {
     document.getElementById("upload_widget").addEventListener(
       "click",
       function () {
-        console.log("masuk sini yoks")
         myWidget.open();
       },
       false
