@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         loader:mustUser,
         children: [
         {
-            path:"/Homepage/",
+            path:"/Homepage",
             element: <UserLandingPage/>,
         },
         {
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         loader:mustAdmin,
         children: [
           {
-            path:"/Homepage/Admin/",
+            path:"/Homepage/Admin",
             element: <FormMenuAdmin/>,
           },
           {
