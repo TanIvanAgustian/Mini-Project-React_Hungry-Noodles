@@ -9,7 +9,6 @@ import Auth from "./Authentication"
 
 import Root from './layout/JSX/Root/root'
 import UserLandingPage from './layout/JSX/User/userLandingPage'
-import AdminLandingPage from './layout/JSX/Admin/adminLandingPage'
 import Login from './layout/JSX/Login'
 import Register from './layout/JSX/Register'
 import RootUser from './layout/JSX/Root/rootUser'
@@ -21,6 +20,7 @@ import DetailMenus from './layout/JSX/Admin/detailMenus'
 import Cart from './layout/JSX/User/cart'
 import Checkout from './layout/JSX/User/checkout'
 import CheckoutHistory from './layout/JSX/User/checkoutHistory'
+import CheckoutList from './layout/JSX/Admin/checkoutList'
 
 const {mustAdmin,mustLogin,mustUser} = Auth()
 
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         loader:mustUser,
         children: [
         {
-            path:"/Homepage/",
+            path:"/Homepage",
             element: <UserLandingPage/>,
         },
         {
@@ -72,11 +72,7 @@ const router = createBrowserRouter([
         loader:mustAdmin,
         children: [
           {
-            path:"/Homepage/Admin/",
-            element: <AdminLandingPage/>,
-          },
-          {
-            path:"/Homepage/Admin/Menus",
+            path:"/Homepage/Admin",
             element: <FormMenuAdmin/>,
           },
           {
@@ -86,7 +82,11 @@ const router = createBrowserRouter([
           {
             path:"/Homepage/Admin/AddMenus/:id",
             element: <DetailMenus/>
-          }
+          },
+          {
+            path:"/Homepage/Admin/Checkout",
+            element: <CheckoutList/>,
+          },
         ]
     }
 ])

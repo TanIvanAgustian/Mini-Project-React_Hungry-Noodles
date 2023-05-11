@@ -3,46 +3,55 @@ import * as Yup from "yup";
 import { Modal } from "react-bootstrap";
 import { UpdateMenusById } from "../../../fetchData/graphQLMenus";
 import CloudinaryUpload from "../../Js/cloudinaryUpload";
-
+import { UpdateCartByMenus } from "../../../fetchData/graphQLCart";
 
 export default function AdminEditMenuForm(props) {
-    
-    const {UpdateMenu} = UpdateMenusById()
-    
+    const { UpdateMenu } = UpdateMenusById();
+    const { UpdateCartByMenu } = UpdateCartByMenus();
+
     const data = props.src;
-    console.log(data)
 
     const formik = useFormik({
         initialValues: {
         menuName: data.menuName,
-        menuDescription:data.menuDescription,
+        menuDescription: data.menuDescription,
         menuImage: data.menuImage,
         menuCategory: data.menuCategory,
         menuPrice: data.menuPrice,
-        menuStock: data.menuStock,
         },
         validationSchema: Yup.object({
-            menuName: Yup.string().required("Product Name Empty"),
-            menuDescription: Yup.string().required("Product Description Empty"),
-            menuCategory: Yup.string().required("Product Category Empty"),
-            menuPrice: Yup.string().required("Product Price Empty"),
-            menuStock: Yup.string().required("Product Stock Empty"),
+        menuName: Yup.string().required("Product Name Empty"),
+        menuDescription: Yup.string().required("Product Description Empty"),
+        menuCategory: Yup.string().required("Product Category Empty"),
+        menuPrice: Yup.string().required("Product Price Empty"),
         }),
         onSubmit: (e) => {
-            UpdateMenu({
-                variables: {
-                    id : data.id,
-                    object: {
-                        menuName : formik.values.menuName,
-                        menuDescription : formik.values.menuDescription,
-                        menuImage : document.getElementById("uploadedimage").getAttribute("src"),
-                        menuCategory : formik.values.menuCategory,
-                        menuPrice : formik.values.menuPrice,
-                        menuStock : formik.values.menuStock,
-                    }
-                }
-            })
-            props.onHide()
+        UpdateMenu({
+            variables: {
+            id: data.id,
+            object: {
+                menuName: formik.values.menuName,
+                menuDescription: formik.values.menuDescription,
+                menuImage: document
+                .getElementById("uploadedimage")
+                .getAttribute("src"),
+                menuCategory: formik.values.menuCategory,
+                menuPrice: formik.values.menuPrice,
+            },
+            },
+        });
+        UpdateCartByMenu({
+            variables: {
+            menu_ID: data.id,
+            object: {
+                menuName: formik.values.menuName,
+                menuPrice: formik.values.menuPrice,
+                menuAllPrice: formik.values.menuPrice,
+                menuAmount: 1,
+            },
+            },
+        });
+        props.onHide();
         },
     });
 
@@ -60,12 +69,17 @@ export default function AdminEditMenuForm(props) {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                
-                <div className="text-center mb-3">
-                    <img id="uploadedimage" className="rounded mb-3" width={"200px"} src={data.menuImage} alt="image Not Found" /> <br />
-                    <CloudinaryUpload/>
-                </div>
-            
+            <div className="text-center mb-3">
+                <img
+                id="uploadedimage"
+                className="rounded mb-3"
+                width={"200px"}
+                src={data.menuImage}
+                alt="image Not Found"
+                />{" "}
+                <br />
+                <CloudinaryUpload />
+            </div>
 
             <form onSubmit={formik.handleSubmit}>
                 <div className="form-group row mt-2">
@@ -90,7 +104,10 @@ export default function AdminEditMenuForm(props) {
                 </div>
 
                 <div className="form-group row mt-2">
-                <label htmlFor="inputDescription3" className="col-sm-4 col-form-label">
+                <label
+                    htmlFor="inputDescription3"
+                    className="col-sm-4 col-form-label"
+                >
                     Deskripsi Produk
                 </label>
                 <div className="col-sm-8">
@@ -142,7 +159,7 @@ export default function AdminEditMenuForm(props) {
                     Harga Produk
                 </label>
                 <div className="col-sm-8">
-                    <input 
+                    <input
                     type="number"
                     className="form-control"
                     id="menuPrice"
@@ -153,27 +170,6 @@ export default function AdminEditMenuForm(props) {
                     {formik.errors.menuPrice && formik.touched.menuPrice && (
                     <div className="form-text text-danger">
                         {formik.errors.menuPrice}
-                    </div>
-                    )}
-                </div>
-                </div>
-
-                <div className="form-group row mt-2 mb-3">
-                <label htmlFor="inputEmail3" className="col-sm-4 col-form-label">
-                    Stok Produk
-                </label>
-                <div className="col-sm-8">
-                    <input 
-                    type="number"
-                    className="form-control"
-                    id="menuStock"
-                    placeholder="Masukkan Stok Produk"
-                    value={formik.values.menuStock}
-                    onChange={formik.handleChange}
-                    />
-                    {formik.errors.menuStock && formik.touched.menuStock && (
-                    <div className="form-text text-danger">
-                        {formik.errors.menuStock}
                     </div>
                     )}
                 </div>

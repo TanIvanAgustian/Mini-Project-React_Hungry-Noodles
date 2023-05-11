@@ -5,30 +5,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getAuthCookie } from "../../../utils/cookies";
 import { AddToCart } from "../../../fetchData/graphQLCart";
 
-export default function CarouselLogin(){
-
-    const {data} = GraphQLMenu()
+export default function CarouselLogin() {
+    const { data } = GraphQLMenu();
 
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
-            return (
-            <div
-                className={className}
-                style={{ ...style, display: "block", background: "black" }}
-                onClick={onClick}
-            />
-            );
-        }
+        return (
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "black" }}
+            onClick={onClick}
+        />
+        );
+    }
     function SamplePrevArrow(props) {
         const { className, style, onClick } = props;
-            return (
-            <div
-                className={className}
-                style={{ ...style, display: "block", background: "black" }}
-                onClick={onClick}
-            />
-            );
-        }
+        return (
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "black" }}
+            onClick={onClick}
+        />
+        );
+    }
 
     const settings = {
         dots: true,
@@ -40,53 +39,62 @@ export default function CarouselLogin(){
         autoplaySpeed: 4000,
         cssEase: "linear",
         nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
+        prevArrow: <SamplePrevArrow />,
     };
-    return <>
+    return (
+        <>
         <Slider {...settings}>
             {data?.Menus.map((post) => (
-                <div>
-                    <center>
-                        <img src={post.menuImage} alt="" className="mt-3" style={{paddingLeft:"10px", borderRadius:"30px", paddingRight:"10px"}} width={"100%"} height={"500px"}/>
-                        <h3>{post.menuName}</h3>
-                        <p>{post.menuDescription}</p>
-                    </center>
-                </div>
+            <div>
+                <center>
+                <img
+                    src={post.menuImage}
+                    alt=""
+                    className="mt-3"
+                    style={{
+                    paddingLeft: "10px",
+                    borderRadius: "30px",
+                    paddingRight: "10px",
+                    }}
+                    width={"100%"}
+                    height={"500px"}
+                />
+                <h3>{post.menuName}</h3>
+                <p>{post.menuDescription}</p>
+                </center>
+            </div>
             ))}
-            
         </Slider>
-    </>
+        </>
+    );
 }
 
-export function CarouselLandingPageUser(){
+export function CarouselLandingPageUser() {
+    const { data } = GraphQLMenu();
 
-    const {data} = GraphQLMenu()
-
-    const {AddCart} = AddToCart()
-    const token = getAuthCookie()
+    const { AddCart } = AddToCart();
+    const token = getAuthCookie();
 
     const handleAddCart = (item) => {
-        var Buy = confirm("Apakah Yakin Membeli "+item.menuName)
-        if(Buy){
-            AddCart({
-                variables: {
-                    object: {
-                        menuName : item.menuName,
-                        menuPrice : item.menuPrice,
-                        menuAllPrice : item.menuPrice,
-                        user_ID : token,
-                        menu_ID : item.id
-                    }
-                }
-            })
-            console.log("harusnya masuk")
+        var Buy = confirm("Apakah Yakin Membeli " + item.menuName);
+        if (Buy) {
+        AddCart({
+            variables: {
+            object: {
+                menuName: item.menuName,
+                menuPrice: item.menuPrice,
+                menuAllPrice: item.menuPrice,
+                user_ID: token,
+                menu_ID: item.id,
+            },
+            },
+        });
+        } else {
+        setTimeout(() => {
+            alert("Pembelian dibatalkan");
+        }, 2000);
         }
-        else{
-            setTimeout(() => {
-                alert("Pembelian dibatalkan")
-            }, 2000);
-        }
-    }
+    };
 
     const settings = {
         dots: true,
@@ -100,25 +108,47 @@ export function CarouselLandingPageUser(){
     };
     return (
         <div>
-            <h2 className="text-center text-light mb-3">Our Products</h2>
-            <Slider {...settings}>
-                {data?.Menus.map((post) => (  
-                    <div className="card mb-3 p-3">
-                    <div className="row g-0 ">
-                        <div className="col-md-4">
-                            <img src={post.menuImage} height={"140px"} width={"100%"} className="rounded-start" alt="..."/>
-                        </div>
-                        <div className="col-md-8">
-                            <div className="card-body">
-                            <h4 className="card-title">{post.menuName}</h4>
-                            <h5 className="card-text">{post.menuPrice}</h5>
-                            <button className="btn btn-primary float-end mt-3" onClick={() => handleAddCart(post)}><FontAwesomeIcon icon={["fas","cart-shopping"]} fixedWidth/>Add to Cart</button>
-                            </div>
-                        </div>
-                        </div>
+        <h2 className="text-center text-light mb-3">Our Products</h2>
+        <Slider {...settings}>
+            {data?.Menus.map((post) => (
+            <div className="card mb-3 p-3">
+                <div className="row g-0 ">
+                <div className="col-md-4">
+                    <img
+                    src={post.menuImage}
+                    height={"140px"}
+                    width={"100%"}
+                    className="rounded-start"
+                    alt="..."
+                    />
+                </div>
+                <div className="col-md-8">
+                    <div className="card-body">
+                    <h4 className="card-title">{post.menuName}</h4>
+                    <h5 className="card-text">{post.menuPrice}</h5>
+                    {post.menuAvailability ? (
+                        <button
+                        className="btn btn-primary float-end mt-3"
+                        onClick={() => handleAddCart(post)}
+                        >
+                        <FontAwesomeIcon
+                            icon={["fas", "cart-shopping"]}
+                            fixedWidth
+                        />
+                        Add to Cart
+                        </button>
+                    ) : (
+                        <button className="btn btn-secondary float-end" disabled>
+                        <FontAwesomeIcon icon={["fas", "sad-cry"]} fixedWidth />{" "}
+                        Product Habis
+                        </button>
+                    )}
                     </div>
-                ))}
-            </Slider>
+                </div>
+                </div>
+            </div>
+            ))}
+        </Slider>
         </div>
     );
 }

@@ -29,7 +29,6 @@ export default function ListMenusUser(){
                     }
                 }
             })
-            console.log("harusnya masuk")
         }
         else{
             alert("Pembelian dibatalkan")
